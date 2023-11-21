@@ -20,7 +20,11 @@ export default function Home() {
     category_9: Admin?.amount?.category_9 || 0,
     category_10: Admin?.amount?.category_10 || 0,
   });
+
+  //Use Router to Navigate
   const route = useRouter();
+
+  //Fetch Admin when user Id changes
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
@@ -38,6 +42,8 @@ export default function Home() {
     };
     fetchAdmin();
   }, [id]);
+
+  //If No Id Redirect to Sign In
   useEffect(() => {
     const myValue = localStorage.getItem("id");
     if (myValue) {
@@ -46,10 +52,14 @@ export default function Home() {
       route.push("/signin");
     }
   }, []);
+
+  //Set Amount Of Inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setAmount((pre) => ({ ...pre, [name]: parseInt(value) }));
   };
+
+  //Save Changes
   const handleSave = async () => {
     try {
       const res = await axios.put(
@@ -77,6 +87,8 @@ export default function Home() {
       console.log("Error", error);
     }
   };
+
+  //Save Button Disable Logic
   let isDisabled =
     amount.category_10 > 79 &&
     amount.category_9 > 59 &&
@@ -85,6 +97,7 @@ export default function Home() {
     amount.category_6 > 99 &&
     chargeCustomers;
 
+  //Radio Button Logic
   const handleChargeCustomersChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -92,13 +105,13 @@ export default function Home() {
     setChargeCustomers(newValue);
   };
   return (
-    <main className="mx-auto  flex min-h-screen w-full p-24 justify-center bg-[#030303] text-white">
-      <section className="flex w-[38rem] flex-col space-y-10">
-        <div className="text-center text-4xl font-medium">
+    <main className="mx-auto  flex min-h-screen w-full p-8 md:p-24 justify-center bg-[#030303] text-white">
+      <section className="flex md:w-[38rem] w-full flex-col space-y-10">
+        <h1 className="text-center text-4xl font-medium">
           {Admin?.name} {Admin?.location} On Dhun Jam
-        </div>
+        </h1>
 
-        <div className="mb-5 flex justify-between items-center">
+        <div className="mb-5 flex justify-between items-center md:flex-row flex-col gap-8">
           <label className=" block text-base font-medium ">
             Are you coming to the event?
           </label>
@@ -140,7 +153,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex w-full justify-between items-center">
+        <div className="flex w-full justify-between items-center md:flex-row flex-col gap-8">
           <label className=" block text-base font-medium ">
             Custom song request amount
           </label>
@@ -152,11 +165,11 @@ export default function Home() {
             width="full"
           />
         </div>
-        <div className="flex w-full justify-between">
+        <div className="flex w-full justify-between items-center md:flex-row flex-col gap-8">
           <label className=" block text-base font-medium w-[250px]">
             Regular song request amounts, from high to low
           </label>
-          <div className="w-[300px] flex gap-2 justify-end">
+          <div className="md:w-[300px] w-full flex gap-2 justify-end">
             <Input
               name="category_7"
               onChange={(e) => handleChange(e)}

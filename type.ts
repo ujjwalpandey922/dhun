@@ -20,6 +20,6 @@ export interface InputType {
 }
 export interface ButtonType {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
-  disabled: boolean;
+  disabled?: boolean;
   text: string;
 }

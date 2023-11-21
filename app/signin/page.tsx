@@ -6,11 +6,13 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
+import Buttons from "@/components/Buttons";
 const page = () => {
   const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  // change Logic
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     type: string
@@ -18,10 +20,14 @@ const page = () => {
     const { value } = e.target;
     type === "userName" ? setuserName(value) : setPassword(value);
   };
+
+  // Set Needed username and password
   const handleSample = () => {
     setuserName("DJ@4");
     setPassword("Dhunjam@2023");
   };
+
+  // Submit Logic
   const handleSubmit = async () => {
     if (!userName || !password) {
       toast("Enter All Fields !!!", {
@@ -45,11 +51,10 @@ const page = () => {
           redirect: false,
         }
       );
-        console.log({res})
       if (res?.status === 200) {
         localStorage.setItem("id", res?.data?.data.id);
         router.push("/");
-      } 
+      }
     } catch (error) {
       toast.error("Invalid Credentials", {
         position: "top-right",
@@ -62,12 +67,12 @@ const page = () => {
         theme: "dark",
       });
 
-      // throw new Error("Log In Failed");
+      return;
     }
   };
   return (
-    <main className="mx-auto  flex min-h-screen w-full items-center justify-center bg-[#030303] text-white">
-      <section className="flex w-[30rem] flex-col space-y-10">
+    <main className="mx-auto p-8 flex min-h-screen w-full items-center justify-center bg-[#030303] text-white">
+      <section className="flex w-full md:w-[38rem] flex-col space-y-10">
         <div className="text-center text-4xl font-medium">
           Venue Admin Login
         </div>
@@ -76,7 +81,7 @@ const page = () => {
           <input
             type="text"
             placeholder="User Name"
-            className="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            className=" border-none bg-transparent outline-none placeholder:italic focus:outline-none md:w-[300px] w-full"
             value={userName}
             onChange={(e) => handleChange(e, "userName")}
           />
@@ -86,7 +91,7 @@ const page = () => {
           <input
             type={!showPassword ? "password" : "text"}
             placeholder="Password"
-            className="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            className=" border-none bg-transparent outline-none placeholder:italic focus:outline-none md:w-[300px] w-full"
             value={password}
             onChange={(e) => handleChange(e, "pass")}
           />
@@ -103,12 +108,7 @@ const page = () => {
           )}
         </div>
 
-        <button
-          className="transform rounded-lg bg-[#6741D9] py-2 font-bold duration-300 hover:bg-indigo-400"
-          onClick={handleSubmit}
-        >
-          Sign In
-        </button>
+        <Buttons onClick={handleSubmit} text="Sign In" disabled={true} />
 
         <Link
           href="#"

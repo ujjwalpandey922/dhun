@@ -96,8 +96,12 @@ const Charts = ({
       },
     ],
   };
-  // @ts-ignore
-  return <Bar options={options} data={data} />;
+  return (
+    <div className="w-full">
+       {/* @ts-ignore */}
+      <Bar options={options} data={data} />
+    </div>
+  );
 };
 
 export default Charts;
